@@ -1,0 +1,13 @@
+.DS_Store
+.venv/
+.venv-xtts/
+.cache/
+__pycache__/
+*.pyc
+
+# Optional heavy source
+audio/raw/
+
+# Local scratch exports
+audio/processed/*.aiff
+audio/processed/*.wav

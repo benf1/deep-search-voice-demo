@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deep Search English Demo</title>
+    <style>
+      :root {
+        --bg: #0a1117;
+        --panel: #101b25;
+        --ink: #edf4fb;
+        --muted: #a8becf;
+        --accent: #4ad3a3;
+        --accent-2: #f8c145;
+        --edge: #1f3344;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(1100px 500px at 8% -10%, #12314a 0%, transparent 55%),
+          radial-gradient(900px 480px at 100% 8%, #2c1f12 0%, transparent 52%),
+          var(--bg);
+        font-family: "Avenir Next", "Futura", "Segoe UI", sans-serif;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 40px 20px 72px;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.25rem);
+        line-height: 1.02;
+        letter-spacing: 0.01em;
+      }
+      .sub {
+        margin-top: 14px;
+        color: var(--muted);
+        max-width: 78ch;
+        line-height: 1.45;
+      }
+      .note {
+        margin-top: 20px;
+        border-left: 4px solid var(--accent-2);
+        padding: 10px 14px;
+        background: rgba(248, 193, 69, 0.08);
+        color: #f9e9be;
+      }
+      .grid {
+        margin-top: 30px;
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+      .card {
+        border: 1px solid var(--edge);
+        background: linear-gradient(160deg, rgba(21, 36, 50, 0.96), rgba(15, 26, 36, 0.96));
+        border-radius: 14px;
+        padding: 16px;
+      }
+      .label {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .title {
+        margin: 0 0 10px;
+        font-size: 1.15rem;
+      }
+      .meta {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      audio {
+        width: 100%;
+      }
+      .files {
+        margin-top: 28px;
+        color: var(--muted);
+      }
+      .files a {
+        color: var(--ink);
+      }
+      .contact {
+        margin-top: 34px;
+        padding-top: 20px;
+        border-top: 1px solid var(--edge);
+      }
+      .contact p {
+        margin: 6px 0;
+      }
+      .chip {
+        display: inline-block;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        border: 1px solid var(--edge);
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Deep Search: French-to-English Demo Segment</h1>
+      <p class="sub">
+        Prototype based on one interstitial intervention from Laurent Garnier's
+        <em>[DEEP]Search</em> program. The workflow used extraction, Demucs source separation,
+        Whisper transcription, idiomatic English localization, and TTS remix over the original
+        music bed.
+      </p>
+      <div>
+        <span class="chip">Source: FIP / Radio France</span>
+        <span class="chip">Selected window: 05:08-07:53</span>
+        <span class="chip">Duration: 2m45</span>
+      </div>
+      <p class="note">
+        Voice clone test is now enabled with XTTS v2 using a 10-second Laurent reference sample.
+        The full-length clone render is running separately; below are immediate quality-test outputs.
+      </p>
+
+      <section class="grid">
+        <article class="card">
+          <p class="label">Original</p>
+          <h2 class="title">French Interstitial</h2>
+          <p class="meta">Direct cut from the episode segment.</p>
+          <audio controls preload="metadata" src="./assets/original-fr.mp3"></audio>
+        </article>
+        <article class="card">
+          <p class="label">English Version</p>
+          <h2 class="title">Localized + Mixed</h2>
+          <p class="meta">English narration aligned over separated music bed.</p>
+          <audio controls preload="metadata" src="./assets/english-mix.mp3"></audio>
+        </article>
+        <article class="card">
+          <p class="label">Clone Test</p>
+          <h2 class="title">XTTS v2 (Dry)</h2>
+          <p class="meta">30-second English clone quality sample, no bed.</p>
+          <audio controls preload="metadata" src="./assets/english-clone-xtts-short.mp3"></audio>
+        </article>
+        <article class="card">
+          <p class="label">Clone Test</p>
+          <h2 class="title">XTTS v2 (Mixed)</h2>
+          <p class="meta">Same 30-second clone sample layered over music bed.</p>
+          <audio controls preload="metadata" src="./assets/english-clone-xtts-short-mix.mp3"></audio>
+        </article>
+        <article class="card">
+          <p class="label">Stem</p>
+          <h2 class="title">Isolated Vocal (FR)</h2>
+          <p class="meta">Demucs vocal extraction used for cleaner transcription.</p>
+          <audio controls preload="metadata" src="./assets/vocals-isolated.mp3"></audio>
+        </article>
+        <article class="card">
+          <p class="label">Stem</p>
+          <h2 class="title">Music Bed (No Vocals)</h2>
+          <p class="meta">Companion bed used for the English remix.</p>
+          <audio controls preload="metadata" src="./assets/music-bed.mp3"></audio>
+        </article>
+      </section>
+
+      <section class="files">
+        <p>Scripts:</p>
+        <p><a href="./assets/french-script.txt">French cleaned transcript</a></p>
+        <p><a href="./assets/english-script.txt">English localized script</a></p>
+      </section>
+
+      <section class="contact">
+        <h3>Contact</h3>
+        <p>Name: Ben Frankforter</p>
+        <p>Email: your-email@domain.com</p>
+      </section>
+    </main>
+  </body>
+</html>
