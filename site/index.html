@@ -6,53 +6,98 @@
     <title>Deep Search Global Samples</title>
     <style>
       :root {
-        --bg: #070707;
-        --panel: #111111;
-        --line: #2a2a2a;
-        --ink: #f3f3f3;
-        --muted: #b4b4b4;
-        --fip: #ffd300;
+        --bg: #06070f;
+        --panel: #0e1120;
+        --line: #29304b;
+        --ink: #f5f2ff;
+        --muted: #d2cee6;
+        --fip: #f10080;
+        --hero1: #0f1225;
+        --hero2: #292d4c;
+        --hero3: #11162d;
       }
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        background: radial-gradient(900px 400px at 50% -120px, #1b1b1b 0%, var(--bg) 70%);
+        background: radial-gradient(1100px 540px at 50% -220px, #2a2f57 0%, var(--bg) 70%);
         color: var(--ink);
-        font-family: "Avenir Next", "Helvetica Neue", Helvetica, sans-serif;
+        font-family: "Avenir Next", "Century Gothic", "Helvetica Neue", Helvetica, sans-serif;
       }
       .wrap { width: min(920px, 92vw); margin: 0 auto; padding: 24px 0 44px; }
       .hero {
-        border: 1px solid var(--line);
-        background: linear-gradient(180deg, #161616, #0d0d0d);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #353d61;
+        border-radius: 12px;
+        background:
+          radial-gradient(1200px 560px at 50% 14%, #464b78 0%, transparent 58%),
+          linear-gradient(170deg, var(--hero2) 0%, var(--hero1) 55%, var(--hero3) 100%);
         display: grid;
-        grid-template-columns: 110px 1fr;
-        gap: 14px;
-        padding: 14px;
+        grid-template-columns: 1fr 240px;
+        gap: 28px;
+        padding: clamp(22px, 3.6vw, 42px);
         align-items: center;
       }
-      .hero img {
-        width: 110px;
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        background: rgba(122, 12, 95, 0.42);
+        transform-origin: center bottom;
+        z-index: 0;
+      }
+      .hero::before {
+        width: 160%;
+        height: 120px;
+        left: -24%;
+        bottom: 30%;
+        transform: rotate(-28deg);
+      }
+      .hero::after {
+        width: 135%;
         height: 110px;
+        right: -40%;
+        bottom: 8%;
+        transform: rotate(9deg);
+      }
+      .hero-copy { position: relative; z-index: 1; }
+      .hero-cover {
+        position: relative;
+        z-index: 1;
+        justify-self: end;
+      }
+      .hero-cover img {
+        width: min(240px, 36vw);
+        aspect-ratio: 1 / 1;
         object-fit: cover;
-        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
       }
       .badge {
         display: inline-block;
-        background: var(--fip);
-        color: #000;
+        background: #ffffff17;
+        border: 1px solid #ffffff33;
+        color: #fff;
         font-weight: 800;
         font-size: 0.72rem;
         letter-spacing: 0.05em;
         text-transform: uppercase;
         padding: 3px 8px;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
+        border-radius: 999px;
       }
       h1 {
-        margin: 0 0 6px;
-        font-size: clamp(1.12rem, 2.6vw, 1.55rem);
-        line-height: 1.15;
+        margin: 0 0 10px;
+        font-size: clamp(1.35rem, 3.4vw, 2.75rem);
+        line-height: 1.06;
+        letter-spacing: -0.02em;
       }
-      .lead { margin: 0; color: var(--muted); font-size: 0.95rem; }
+      .lead {
+        margin: 0;
+        max-width: 620px;
+        color: var(--muted);
+        font-size: clamp(0.93rem, 1.7vw, 1.2rem);
+      }
       .section {
         margin-top: 14px;
         border: 1px solid var(--line);
@@ -87,19 +132,22 @@
       .meta { margin: 0 0 9px; color: var(--muted); font-size: 0.9rem; }
       audio { width: 100%; }
       @media (max-width: 640px) {
-        .hero { grid-template-columns: 1fr; }
-        .hero img { width: 100%; height: auto; max-height: 220px; }
+        .hero { grid-template-columns: 1fr; gap: 16px; }
+        .hero-cover { justify-self: start; }
+        .hero-cover img { width: min(240px, 64vw); }
       }
     </style>
   </head>
   <body>
     <main class="wrap">
       <header class="hero">
-        <img src="https://www.radiofrance.fr/s3/cruiser-production-eu3/2024/09/a27dcc74-751d-4074-ad04-a19e7f302058/400x400_sc_carre-deepsearch.jpg" alt="[DEEP]Search cover" />
-        <div>
+        <div class="hero-copy">
           <div class="badge">FIP Deep Search</div>
-          <h1>[DEEP]Search by Laurent Garnier - podcast and replay show</h1>
+          <h1>[DEEP]Search by Laurent Garnier</h1>
           <p class="lead">Spreading the love globally. Try Deep Search in english and spanish.</p>
+        </div>
+        <div class="hero-cover">
+          <img src="https://www.radiofrance.fr/s3/cruiser-production-eu3/2024/09/a27dcc74-751d-4074-ad04-a19e7f302058/400x400_sc_carre-deepsearch.jpg" alt="[DEEP]Search cover" />
         </div>
       </header>
 
