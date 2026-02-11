@@ -61,6 +61,16 @@
         transform: rotate(9deg);
       }
       .hero-copy { position: relative; z-index: 1; }
+      .hero-audio {
+        margin-top: 16px;
+        padding: 10px;
+        border: 1px solid #4a547f;
+        border-radius: 12px;
+        background: #0a0f24b8;
+      }
+      .hero-audio .kicker { margin-bottom: 4px; }
+      .hero-audio .title { margin-bottom: 4px; }
+      .hero-audio .meta { margin-bottom: 8px; font-size: 0.85rem; }
       .hero-cover {
         position: relative;
         z-index: 1;
@@ -259,28 +269,17 @@
           <div class="badge">FIP Deep Search</div>
           <h1>[DEEP]Search by Laurent Garnier</h1>
           <p class="lead">Spreading the love globally. Hear Deep Search in English and Spanish.</p>
+          <div class="hero-audio">
+            <p class="kicker">Original Voice</p>
+            <h3 class="title">Laurent in French</h3>
+            <p class="meta">The untouched segment from the original broadcast.</p>
+            <audio controls preload="metadata" src="./assets/original-fr.mp3"></audio>
+          </div>
         </div>
         <div class="hero-cover">
           <img src="https://www.radiofrance.fr/s3/cruiser-production-eu3/2024/09/a27dcc74-751d-4074-ad04-a19e7f302058/400x400_sc_carre-deepsearch.jpg" alt="[DEEP]Search cover" />
         </div>
       </header>
-
-      <section class="section">
-        <h2>Original French</h2>
-        <div class="grid">
-          <article class="card">
-            <p class="kicker">Original Voice</p>
-            <h3 class="title">Laurent in French</h3>
-            <p class="meta">The untouched segment from the original broadcast.</p>
-            <div class="waveform" aria-hidden="true"></div>
-            <div class="actions">
-              <button class="btn" data-action="play">Play</button>
-              <button class="btn" data-action="jump">Jump to highlight</button>
-            </div>
-            <audio controls preload="metadata" src="./assets/original-fr.mp3"></audio>
-          </article>
-        </div>
-      </section>
 
       <section class="section">
         <h2>DEEP SEARCH IN ENGLISH</h2>
