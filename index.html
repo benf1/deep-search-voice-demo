@@ -7,8 +7,8 @@
     <style>
       :root {
         --bg: #06070f;
-        --panel: #0e1120;
-        --line: #29304b;
+        --panel: #0d1122;
+        --line: #2b3557;
         --ink: #f5f2ff;
         --muted: #d2cee6;
         --fip: #f10080;
@@ -100,8 +100,12 @@
       }
       .section {
         margin-top: 14px;
-        border: 1px solid var(--line);
-        background: var(--panel);
+        border: 1px solid #3a4266;
+        border-radius: 16px;
+        background:
+          linear-gradient(165deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+          linear-gradient(180deg, #0d1225, #090d1d);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.24);
         padding: 14px;
         opacity: 0;
         transform: translateY(10px);
@@ -122,8 +126,12 @@
         gap: 10px;
       }
       .card {
-        border: 1px solid var(--line);
-        background: linear-gradient(180deg, #0c1020 0%, #080b18 100%);
+        position: relative;
+        border: 1px solid #414d78;
+        border-radius: 14px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.005) 100%),
+          linear-gradient(180deg, #0b1020 0%, #070b17 100%);
         padding: 12px;
         transition:
           transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -135,8 +143,8 @@
       }
       .card:hover {
         transform: translateY(-4px);
-        border-color: #49558d;
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+        border-color: #5967a5;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
       }
       .card:focus-within {
         border-color: #f10080;
@@ -159,6 +167,58 @@
       }
       .title { margin: 0 0 2px; font-size: 1.01rem; }
       .meta { margin: 0 0 9px; color: var(--muted); font-size: 0.9rem; }
+      .waveform {
+        height: 34px;
+        border-radius: 8px;
+        margin: 10px 0 10px;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            #ffffff08 0 2px,
+            #00000000 2px 5px
+          ),
+          linear-gradient(180deg, #131932, #0c1022);
+        border: 1px solid #3a456e;
+        position: relative;
+        overflow: hidden;
+      }
+      .waveform::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, #f1008033 0%, #ffffff00 55%, #f100801f 100%);
+        transform: translateX(-100%);
+        transition: transform 400ms ease;
+      }
+      .card:hover .waveform::after,
+      .card:focus-within .waveform::after {
+        transform: translateX(0);
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .btn {
+        appearance: none;
+        border: 1px solid #4b5685;
+        background: #121936;
+        color: #efe9ff;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        padding: 5px 10px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 0.78rem;
+      }
+      .btn:hover {
+        border-color: #f10080;
+        color: #fff;
+      }
+      .btn:focus-visible {
+        outline: 2px solid #f10080;
+        outline-offset: 1px;
+      }
       audio { width: 100%; }
 
       @keyframes sectionIn {
@@ -198,7 +258,7 @@
         <div class="hero-copy">
           <div class="badge">FIP Deep Search</div>
           <h1>[DEEP]Search by Laurent Garnier</h1>
-          <p class="lead">Spreading the love globally. Try Deep Search in english and spanish.</p>
+          <p class="lead">Spreading the love globally. Hear Deep Search in English and Spanish.</p>
         </div>
         <div class="hero-cover">
           <img src="https://www.radiofrance.fr/s3/cruiser-production-eu3/2024/09/a27dcc74-751d-4074-ad04-a19e7f302058/400x400_sc_carre-deepsearch.jpg" alt="[DEEP]Search cover" />
@@ -209,9 +269,14 @@
         <h2>Original French</h2>
         <div class="grid">
           <article class="card">
-            <p class="kicker">Version originale</p>
-            <h3 class="title">French Broadcast Segment</h3>
-            <p class="meta">Original Laurent Garnier voice from the Deep Search episode segment.</p>
+            <p class="kicker">Original Voice</p>
+            <h3 class="title">Laurent in French</h3>
+            <p class="meta">The untouched segment from the original broadcast.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/original-fr.mp3"></audio>
           </article>
         </div>
@@ -221,30 +286,50 @@
         <h2>English</h2>
         <div class="grid">
           <article class="card">
-            <p class="kicker">English Version</p>
-            <h3 class="title">Localized + Mixed</h3>
-            <p class="meta">English narration aligned over separated music bed.</p>
+            <p class="kicker">English</p>
+            <h3 class="title">Laurent in English</h3>
+            <p class="meta">Main English version with the original show energy.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/english-mix.mp3"></audio>
           </article>
 
           <article class="card">
-            <p class="kicker">Clone Test</p>
-            <h3 class="title">XTTS v2 (Full Mixed)</h3>
-            <p class="meta">Full translated segment cloned and layered over original bed.</p>
+            <p class="kicker">English</p>
+            <h3 class="title">Clone 1</h3>
+            <p class="meta">Warm and expressive take over the original music bed.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/english-clone-xtts-full-mix.mp3"></audio>
           </article>
 
           <article class="card">
-            <p class="kicker">A/B Variant A</p>
-            <h3 class="title">Identity Heavy (Mixed)</h3>
-            <p class="meta">stability 0.20, similarity 0.95, style 0.40 (1.4x speed)</p>
+            <p class="kicker">English</p>
+            <h3 class="title">Clone 2</h3>
+            <p class="meta">Faster version with extra punch and drive.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/ab/variant_a.mix.1p4x.mp3"></audio>
           </article>
 
           <article class="card">
-            <p class="kicker">A/B Variant B</p>
-            <h3 class="title">Balanced (Mixed)</h3>
-            <p class="meta">stability 0.35, similarity 0.85, style 0.25</p>
+            <p class="kicker">English</p>
+            <h3 class="title">Clone 3</h3>
+            <p class="meta">Balanced tone with clean articulation.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/ab/variant_b.mix.mp3"></audio>
           </article>
         </div>
@@ -255,26 +340,74 @@
         <div class="grid">
           <article class="card">
             <p class="kicker">Spain</p>
-            <h3 class="title">Spanish (Spain) - Localized + Mixed</h3>
-            <p class="meta">Castilian Spanish narration aligned over separated music bed.</p>
+            <h3 class="title">Laurent en Espanol (Espana)</h3>
+            <p class="meta">Spanish version tuned for Spain.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/spanish-es-es-mix.mp3"></audio>
           </article>
 
           <article class="card">
             <p class="kicker">Mexico</p>
-            <h3 class="title">Spanish (Mexico) - Clone Test</h3>
-            <p class="meta">Mexican Spanish clone layered with the original music bed.</p>
+            <h3 class="title">Laurent en Espanol (Mexico)</h3>
+            <p class="meta">Spanish version tuned for Mexico.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/spanish-es-mx-mix.mp3"></audio>
           </article>
 
           <article class="card">
             <p class="kicker">Argentina</p>
-            <h3 class="title">Spanish (Argentina) - Clone Test</h3>
-            <p class="meta">Rioplatense Spanish clone layered with the original music bed.</p>
+            <h3 class="title">Laurent en Espanol (Argentina)</h3>
+            <p class="meta">Spanish version tuned for Argentina.</p>
+            <div class="waveform" aria-hidden="true"></div>
+            <div class="actions">
+              <button class="btn" data-action="play">Play</button>
+              <button class="btn" data-action="jump">Jump to highlight</button>
+            </div>
             <audio controls preload="metadata" src="./assets/spanish-es-ar-mix.mp3"></audio>
           </article>
         </div>
       </section>
     </main>
+    <script>
+      const HIGHLIGHT_TIME = 42;
+      const cards = document.querySelectorAll(".card");
+
+      cards.forEach((card) => {
+        const audio = card.querySelector("audio");
+        const playBtn = card.querySelector("[data-action='play']");
+        const jumpBtn = card.querySelector("[data-action='jump']");
+        if (!audio || !playBtn || !jumpBtn) return;
+
+        playBtn.addEventListener("click", () => {
+          if (audio.paused) {
+            audio.play();
+            playBtn.textContent = "Pause";
+          } else {
+            audio.pause();
+            playBtn.textContent = "Play";
+          }
+        });
+
+        audio.addEventListener("pause", () => {
+          playBtn.textContent = "Play";
+        });
+        audio.addEventListener("play", () => {
+          playBtn.textContent = "Pause";
+        });
+
+        jumpBtn.addEventListener("click", () => {
+          audio.currentTime = Math.min(HIGHLIGHT_TIME, Math.max(0, audio.duration || HIGHLIGHT_TIME));
+          audio.play();
+        });
+      });
+    </script>
   </body>
 </html>
