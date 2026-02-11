@@ -7,7 +7,8 @@ This folder contains a fast pipeline for:
 3. Transcribing French speech with timestamped Whisper segments.
 4. Finding likely spoken interstitial windows for selection.
 5. Separating voice/music with Demucs.
-6. Creating a localized English narration mix (temporary non-clone TTS voice).
+6. Creating a localized English narration mix.
+7. Generating XTTS v2 voice-clone outputs (with approved permission).
 
 ## Files
 
@@ -68,7 +69,17 @@ Current generated outputs:
 - `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/audio/processed/htdemucs/laurent-interstitial-2m45/vocals.mp3`
 - `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/audio/processed/htdemucs/laurent-interstitial-2m45/no_vocals.mp3`
 - `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/audio/processed/laurent-interstitial-2m45.en.mix.mp3`
+- `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/audio/cloned/xtts-en-full.wav`
+- `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/audio/cloned/xtts-en-full.mix.mp3`
 - `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/site/index.html`
+
+Local page preview:
+
+```bash
+python3 -m http.server 8080 --directory /Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/site
+```
+
+Then open: `http://localhost:8080`
 
 ## Note
 
