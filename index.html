@@ -112,24 +112,34 @@
           linear-gradient(180deg, #0d1225, #090d1d);
       }
       .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        display: flex;
+        flex-direction: column;
         gap: 10px;
+        max-width: 760px;
       }
       .toggle-card {
         text-align: left;
         width: 100%;
-        border: 1px solid #4a5583;
+        border: 1px solid #5a679e;
         border-radius: 12px;
-        padding: 12px;
-        background: linear-gradient(180deg, #0b1020 0%, #080c19 100%);
+        padding: 11px 14px;
+        background:
+          linear-gradient(180deg, #151d38 0%, #0d1329 100%);
         color: var(--ink);
         cursor: pointer;
-        transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+        display: grid;
+        grid-template-columns: 120px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        border-bottom-width: 2px;
+        box-shadow:
+          0 8px 0 #151d38,
+          0 14px 26px rgba(0, 0, 0, 0.34);
+        transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
       }
       .toggle-card:hover {
         border-color: #6978b8;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
       }
       .toggle-card:focus-visible {
         outline: 2px solid #f10080;
@@ -137,10 +147,15 @@
       }
       .toggle-card.is-active {
         border-color: #f10080;
-        box-shadow: 0 0 0 1px rgba(241, 0, 128, 0.4) inset, 0 0 18px rgba(241, 0, 128, 0.2);
+        background: linear-gradient(180deg, #1a2341 0%, #121a33 100%);
+        transform: translateY(6px);
+        box-shadow:
+          0 2px 0 #151d38,
+          0 0 0 1px rgba(241, 0, 128, 0.34) inset,
+          0 10px 22px rgba(0, 0, 0, 0.34);
       }
       .lang {
-        margin: 0 0 6px;
+        margin: 0;
         color: var(--fip);
         font-size: 0.72rem;
         font-weight: 800;
@@ -148,8 +163,8 @@
         text-transform: uppercase;
       }
       .name {
-        margin: 0 0 8px;
-        font-size: 1.2rem;
+        margin: 0;
+        font-size: 1.08rem;
         line-height: 1.1;
       }
       .state-row {
@@ -157,7 +172,8 @@
         align-items: center;
         gap: 6px;
         color: var(--muted);
-        font-size: 0.84rem;
+        font-size: 0.8rem;
+        justify-self: end;
       }
       .dot {
         width: 8px;
@@ -175,6 +191,11 @@
         .hero { grid-template-columns: 1fr; gap: 16px; }
         .hero-cover { justify-self: start; }
         .hero-cover img { width: min(240px, 64vw); }
+        .toggle-card {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+        .state-row { justify-self: start; }
       }
     </style>
   </head>
@@ -184,7 +205,7 @@
         <div class="hero-copy">
           <div class="badge">FIP Deep Search</div>
           <h1>[DEEP]Search by Laurent Garnier</h1>
-          <p class="lead">Spreading the love globally. Tap a card to play a version.</p>
+          <p class="lead">[DEEP]Search par Laurent Garnier en exclusivite pour Fip tous les premiers samedis du mois. La premiere emission de FIP avec un DJ resident.</p>
         </div>
         <div class="hero-cover">
           <img src="https://www.radiofrance.fr/s3/cruiser-production-eu3/2024/09/a27dcc74-751d-4074-ad04-a19e7f302058/400x400_sc_carre-deepsearch.jpg" alt="[DEEP]Search cover" />
@@ -248,6 +269,7 @@
     <script>
       const cards = Array.from(document.querySelectorAll('.toggle-card'));
       let active = null;
+      let sharedTime = 0;
 
       function setState(card, isPlaying) {
         const stateEl = card.querySelector('.state');
@@ -256,42 +278,73 @@
         if (stateEl) stateEl.textContent = isPlaying ? 'Playing' : 'Tap to play';
       }
 
+      function setCurrentTimeSafe(audio, time) {
+        const apply = () => {
+          const max = Number.isFinite(audio.duration) && audio.duration > 0 ? Math.max(0, audio.duration - 0.05) : time;
+          audio.currentTime = Math.max(0, Math.min(time, max));
+        };
+        if (audio.readyState >= 1) {
+          apply();
+        } else {
+          audio.addEventListener('loadedmetadata', apply, { once: true });
+        }
+      }
+
       cards.forEach((card) => {
         const audio = card.querySelector('audio');
         if (!audio) return;
 
         card.addEventListener('click', async () => {
+          if (active && active.audio === audio) {
+            sharedTime = audio.currentTime || sharedTime;
+            audio.pause();
+            setState(card, false);
+            active = null;
+            return;
+          }
+
+          const carryTime = active ? active.audio.currentTime : sharedTime;
+
           if (active && active.audio !== audio) {
             active.audio.pause();
             setState(active.card, false);
             active = null;
           }
 
+          setCurrentTimeSafe(audio, carryTime || 0);
+
           if (audio.paused) {
             try {
               await audio.play();
               setState(card, true);
               active = { card, audio };
+              sharedTime = carryTime || 0;
             } catch {
               const stateEl = card.querySelector('.state');
               if (stateEl) stateEl.textContent = 'Playback blocked';
             }
-          } else {
-            audio.pause();
-            setState(card, false);
-            active = null;
           }
         });
 
         audio.addEventListener('ended', () => {
           setState(card, false);
-          if (active && active.audio === audio) active = null;
+          if (active && active.audio === audio) {
+            active = null;
+            sharedTime = 0;
+          }
         });
 
         audio.addEventListener('pause', () => {
           if (active && active.audio === audio && !audio.ended) {
+            sharedTime = audio.currentTime || sharedTime;
             setState(card, false);
             active = null;
+          }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+          if (active && active.audio === audio) {
+            sharedTime = audio.currentTime || sharedTime;
           }
         });
       });
