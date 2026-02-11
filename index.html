@@ -91,6 +91,41 @@
         color: var(--muted);
         font-size: clamp(0.93rem, 1.7vw, 1.2rem);
       }
+      .timeline-shell {
+        margin-top: 14px;
+        max-width: 760px;
+      }
+      .timeline-track {
+        position: relative;
+        height: 12px;
+        border-radius: 999px;
+        border: 1px solid #4e5887;
+        background: #0a1022;
+        overflow: hidden;
+      }
+      .timeline-span {
+        position: absolute;
+        top: 1px;
+        bottom: 1px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #f10080 0%, #b3097d 100%);
+        opacity: 0.72;
+      }
+      .timeline-playhead {
+        position: absolute;
+        top: -1px;
+        width: 2px;
+        height: 14px;
+        background: #ffffff;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.72);
+        transform: translateX(-1px);
+      }
+      .timeline-meta {
+        margin-top: 6px;
+        color: #c2badf;
+        font-size: 0.77rem;
+        letter-spacing: 0.01em;
+      }
       .hero-cover {
         justify-self: end;
       }
@@ -206,6 +241,13 @@
           <div class="badge">FIP Deep Search</div>
           <h1>[DEEP]Search by Laurent Garnier</h1>
           <p class="lead">[DEEP]Search par Laurent Garnier en exclusivite pour Fip tous les premiers samedis du mois. La premiere emission de FIP avec un DJ resident.</p>
+          <div class="timeline-shell">
+            <div class="timeline-track" aria-hidden="true">
+              <div id="timelineSpans"></div>
+              <div class="timeline-playhead" id="timelinePlayhead"></div>
+            </div>
+            <div class="timeline-meta" id="timelineMeta">Speech-only playback: music-only sections are skipped (3.5s cushion).</div>
+          </div>
         </div>
         <div class="hero-cover">
           <img src="https://www.radiofrance.fr/s3/cruiser-production-eu3/2024/09/a27dcc74-751d-4074-ad04-a19e7f302058/400x400_sc_carre-deepsearch.jpg" alt="[DEEP]Search cover" />
@@ -218,49 +260,49 @@
             <p class="lang">French</p>
             <h2 class="name">Original</h2>
             <p class="state-row"><span class="dot" aria-hidden="true"></span><span class="state">Tap to play</span></p>
-            <audio class="sr-audio" preload="metadata" src="./assets/original-fr.mp3"></audio>
+            <audio class="sr-audio" preload="metadata" data-window-set="segment" src="./assets/original-fr.mp3"></audio>
           </button>
 
           <button class="toggle-card" type="button" aria-pressed="false">
             <p class="lang">English</p>
             <h2 class="name">Clone 1</h2>
             <p class="state-row"><span class="dot" aria-hidden="true"></span><span class="state">Tap to play</span></p>
-            <audio class="sr-audio" preload="metadata" src="./assets/english-mix.mp3"></audio>
+            <audio class="sr-audio" preload="metadata" data-window-set="segment" src="./assets/english-mix.mp3"></audio>
           </button>
 
           <button class="toggle-card" type="button" aria-pressed="false">
             <p class="lang">English</p>
             <h2 class="name">Clone 2</h2>
             <p class="state-row"><span class="dot" aria-hidden="true"></span><span class="state">Tap to play</span></p>
-            <audio class="sr-audio" preload="metadata" src="./assets/english-clone-xtts-full-mix.mp3"></audio>
+            <audio class="sr-audio" preload="metadata" data-window-set="segment" src="./assets/english-clone-xtts-full-mix.mp3"></audio>
           </button>
 
           <button class="toggle-card" type="button" aria-pressed="false">
             <p class="lang">English</p>
             <h2 class="name">Clone 3</h2>
             <p class="state-row"><span class="dot" aria-hidden="true"></span><span class="state">Tap to play</span></p>
-            <audio class="sr-audio" preload="metadata" src="./assets/ab/variant_a.mix.1p4x.mp3"></audio>
+            <audio class="sr-audio" preload="metadata" data-window-set="segment" src="./assets/ab/variant_a.mix.1p4x.mp3"></audio>
           </button>
 
           <button class="toggle-card" type="button" aria-pressed="false">
             <p class="lang">English</p>
             <h2 class="name">Clone 4</h2>
             <p class="state-row"><span class="dot" aria-hidden="true"></span><span class="state">Tap to play</span></p>
-            <audio class="sr-audio" preload="metadata" src="./assets/ab/variant_b.mix.mp3"></audio>
+            <audio class="sr-audio" preload="metadata" data-window-set="segment" src="./assets/ab/variant_b.mix.mp3"></audio>
           </button>
 
           <button class="toggle-card" type="button" aria-pressed="false">
             <p class="lang">Spanish</p>
             <h2 class="name">Clone 1</h2>
             <p class="state-row"><span class="dot" aria-hidden="true"></span><span class="state">Tap to play</span></p>
-            <audio class="sr-audio" preload="metadata" src="./assets/spanish-es-es-mix.mp3"></audio>
+            <audio class="sr-audio" preload="metadata" data-window-set="segment" src="./assets/spanish-es-es-mix.mp3"></audio>
           </button>
 
           <button class="toggle-card" type="button" aria-pressed="false">
             <p class="lang">Spanish</p>
             <h2 class="name">Clone 2</h2>
             <p class="state-row"><span class="dot" aria-hidden="true"></span><span class="state">Tap to play</span></p>
-            <audio class="sr-audio" preload="metadata" src="./assets/spanish-es-mx-mix.mp3"></audio>
+            <audio class="sr-audio" preload="metadata" data-window-set="segment" src="./assets/spanish-es-mx-mix.mp3"></audio>
           </button>
         </div>
       </section>
@@ -268,8 +310,30 @@
 
     <script>
       const cards = Array.from(document.querySelectorAll('.toggle-card'));
+      const timelineSpansEl = document.getElementById('timelineSpans');
+      const timelinePlayheadEl = document.getElementById('timelinePlayhead');
+      const timelineMetaEl = document.getElementById('timelineMeta');
       let active = null;
       let sharedTime = 0;
+      let activeWindows = [];
+
+      // Windows define keep zones (speech + 3.5s cushion around transitions).
+      // segment: current 2m45 sample (continuous speech)
+      // full_episode: prepared map for full-length file (~67m42s)
+      const WINDOW_SETS = {
+        segment: { duration: 164.98, windows: [[0.0, 164.98]] },
+        full_episode: {
+          duration: 4062.42,
+          windows: [
+            [0.0, 63.6],
+            [68.06, 494.45],
+            [1289.64, 1319.96],
+            [1356.22, 1824.56],
+            [2153.85, 2804.76],
+            [2898.74, 4050.0]
+          ]
+        }
+      };
 
       function setState(card, isPlaying) {
         const stateEl = card.querySelector('.state');
@@ -287,6 +351,52 @@
           apply();
         } else {
           audio.addEventListener('loadedmetadata', apply, { once: true });
+        }
+      }
+
+      function getScaledWindows(audio) {
+        const key = audio.dataset.windowSet || 'segment';
+        const set = WINDOW_SETS[key] || WINDOW_SETS.segment;
+        const dur = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : set.duration;
+        const ratio = dur / set.duration;
+        return set.windows.map(([s, e]) => [s * ratio, e * ratio]);
+      }
+
+      function renderTimeline(windows, duration) {
+        if (!timelineSpansEl || !timelinePlayheadEl) return;
+        timelineSpansEl.innerHTML = '';
+        if (!duration || !windows.length) return;
+        for (const [s, e] of windows) {
+          const left = (s / duration) * 100;
+          const width = ((e - s) / duration) * 100;
+          const span = document.createElement('span');
+          span.className = 'timeline-span';
+          span.style.left = `${left}%`;
+          span.style.width = `${width}%`;
+          timelineSpansEl.appendChild(span);
+        }
+      }
+
+      function updatePlayhead(audio) {
+        if (!timelinePlayheadEl || !audio?.duration) return;
+        const pct = Math.max(0, Math.min(100, (audio.currentTime / audio.duration) * 100));
+        timelinePlayheadEl.style.left = `${pct}%`;
+      }
+
+      function skipMusicGaps(audio, windows) {
+        if (!windows.length) return;
+        const t = audio.currentTime;
+        if (t < windows[0][0]) {
+          audio.currentTime = windows[0][0];
+          return;
+        }
+        for (let i = 0; i < windows.length - 1; i += 1) {
+          const end = windows[i][1];
+          const nextStart = windows[i + 1][0];
+          if (t > end && t < nextStart) {
+            audio.currentTime = nextStart;
+            return;
+          }
         }
       }
 
@@ -312,6 +422,11 @@
           }
 
           setCurrentTimeSafe(audio, carryTime || 0);
+          activeWindows = getScaledWindows(audio);
+          renderTimeline(activeWindows, audio.duration || WINDOW_SETS.segment.duration);
+          if (timelineMetaEl) {
+            timelineMetaEl.textContent = `Speech-only playback: music-only sections are skipped (3.5s cushion).`;
+          }
 
           if (audio.paused) {
             try {
@@ -319,6 +434,7 @@
               setState(card, true);
               active = { card, audio };
               sharedTime = carryTime || 0;
+              updatePlayhead(audio);
             } catch {
               const stateEl = card.querySelector('.state');
               if (stateEl) stateEl.textContent = 'Playback blocked';
@@ -331,6 +447,7 @@
           if (active && active.audio === audio) {
             active = null;
             sharedTime = 0;
+            updatePlayhead(audio);
           }
         });
 
@@ -344,10 +461,19 @@
 
         audio.addEventListener('timeupdate', () => {
           if (active && active.audio === audio) {
+            skipMusicGaps(audio, activeWindows);
             sharedTime = audio.currentTime || sharedTime;
+            updatePlayhead(audio);
           }
         });
       });
+
+      const firstAudio = cards[0]?.querySelector('audio');
+      if (firstAudio) {
+        activeWindows = getScaledWindows(firstAudio);
+        renderTimeline(activeWindows, WINDOW_SETS.segment.duration);
+        updatePlayhead({ currentTime: 0, duration: WINDOW_SETS.segment.duration });
+      }
     </script>
   </body>
 </html>
