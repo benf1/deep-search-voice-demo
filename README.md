@@ -63,6 +63,13 @@ Run the full prepared pipeline:
 bash /Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/scripts/run_pipeline.sh
 ```
 
+Refresh voice quality with ElevenLabs (keeps the same website layout and player file names):
+
+```bash
+export ELEVENLABS_API_KEY="your_api_key"
+bash /Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/scripts/run_elevenlabs_voice_refresh.sh
+```
+
 Current generated outputs:
 
 - `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/audio/segments/laurent-interstitial-2m45.mp3`
