@@ -3,228 +3,116 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deep Search English Demo</title>
+    <title>[DEEP]Search Voice Samples</title>
     <style>
       :root {
-        --bg: #0a1117;
-        --panel: #101b25;
-        --ink: #edf4fb;
-        --muted: #a8becf;
-        --accent: #4ad3a3;
-        --accent-2: #f8c145;
-        --edge: #1f3344;
+        --bg: #050505;
+        --panel: #101010;
+        --line: #252525;
+        --ink: #f4f4f4;
+        --muted: #b7b7b7;
+        --fip-yellow: #ffd300;
       }
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
       body {
         margin: 0;
+        background: radial-gradient(1000px 450px at 50% -120px, #1b1b1b 0%, var(--bg) 65%);
         color: var(--ink);
-        background:
-          radial-gradient(1100px 500px at 8% -10%, #12314a 0%, transparent 55%),
-          radial-gradient(900px 480px at 100% 8%, #2c1f12 0%, transparent 52%),
-          var(--bg);
-        font-family: "Avenir Next", "Futura", "Segoe UI", sans-serif;
+        font-family: "Avenir Next", "Helvetica Neue", Helvetica, sans-serif;
       }
       .wrap {
-        max-width: 980px;
+        width: min(860px, 92vw);
         margin: 0 auto;
-        padding: 40px 20px 72px;
+        padding: 28px 0 48px;
+      }
+      .header {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, #121212, #0b0b0b);
+        padding: 16px 18px;
+        margin-bottom: 14px;
+      }
+      .badge {
+        display: inline-block;
+        background: var(--fip-yellow);
+        color: #000;
+        font-weight: 800;
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        margin-bottom: 8px;
       }
       h1 {
         margin: 0;
-        font-size: clamp(2rem, 4vw, 3.25rem);
-        line-height: 1.02;
+        font-size: clamp(1.2rem, 2.8vw, 1.7rem);
         letter-spacing: 0.01em;
       }
-      .sub {
-        margin-top: 14px;
-        color: var(--muted);
-        max-width: 78ch;
-        line-height: 1.45;
-      }
-      .note {
-        margin-top: 20px;
-        border-left: 4px solid var(--accent-2);
-        padding: 10px 14px;
-        background: rgba(248, 193, 69, 0.08);
-        color: #f9e9be;
-      }
       .grid {
-        margin-top: 30px;
         display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
+        gap: 10px;
       }
       .card {
-        border: 1px solid var(--edge);
-        background: linear-gradient(160deg, rgba(21, 36, 50, 0.96), rgba(15, 26, 36, 0.96));
-        border-radius: 14px;
-        padding: 16px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 14px;
       }
-      .label {
-        margin: 0 0 8px;
-        color: var(--accent);
-        font-weight: 700;
-        font-size: 0.9rem;
+      .kicker {
+        margin: 0 0 6px;
+        color: var(--fip-yellow);
         text-transform: uppercase;
         letter-spacing: 0.06em;
+        font-size: 0.72rem;
+        font-weight: 700;
       }
       .title {
-        margin: 0 0 10px;
-        font-size: 1.15rem;
+        margin: 0 0 3px;
+        font-size: 1.05rem;
+        font-weight: 700;
       }
       .meta {
-        margin: 0 0 12px;
+        margin: 0 0 10px;
         color: var(--muted);
         font-size: 0.92rem;
       }
-      audio {
-        width: 100%;
-      }
-      .files {
-        margin-top: 28px;
-        color: var(--muted);
-      }
-      .files a {
-        color: var(--ink);
-      }
-      .contact {
-        margin-top: 34px;
-        padding-top: 20px;
-        border-top: 1px solid var(--edge);
-      }
-      .contact p {
-        margin: 6px 0;
-      }
-      .chip {
-        display: inline-block;
-        margin-right: 8px;
-        margin-bottom: 8px;
-        padding: 5px 9px;
-        border-radius: 999px;
-        border: 1px solid var(--edge);
-        color: var(--muted);
-        font-size: 0.82rem;
-      }
+      audio { width: 100%; }
     </style>
   </head>
   <body>
     <main class="wrap">
-      <h1>Deep Search: French-to-English Demo Segment</h1>
-      <p class="sub">
-        Prototype based on one interstitial intervention from Laurent Garnier's
-        <em>[DEEP]Search</em> program. The workflow used extraction, Demucs source separation,
-        Whisper transcription, idiomatic English localization, and TTS remix over the original
-        music bed.
-      </p>
-      <div>
-        <span class="chip">Source: FIP / Radio France</span>
-        <span class="chip">Selected window: 05:08-07:53</span>
-        <span class="chip">Duration: 2m45</span>
-      </div>
-      <p class="note">
-        Added an ElevenLabs A/B run using a longer multi-clip Laurent reference pack.
-        Compare the four tuned variants below to pick the closest identity match.
-      </p>
+      <header class="header">
+        <div class="badge">FIP Deep Search</div>
+        <h1>Voice Sample Comparison</h1>
+      </header>
 
       <section class="grid">
         <article class="card">
-          <p class="label">Original</p>
-          <h2 class="title">French Interstitial</h2>
-          <p class="meta">Direct cut from the episode segment.</p>
-          <audio controls preload="metadata" src="./assets/original-fr.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">English Version</p>
+          <p class="kicker">English Version</p>
           <h2 class="title">Localized + Mixed</h2>
           <p class="meta">English narration aligned over separated music bed.</p>
           <audio controls preload="metadata" src="./assets/english-mix.mp3"></audio>
         </article>
+
         <article class="card">
-          <p class="label">Clone Test</p>
-          <h2 class="title">XTTS v2 (Full Dry)</h2>
-          <p class="meta">Full translated segment (aligned timing), dry cloned voice.</p>
-          <audio controls preload="metadata" src="./assets/english-clone-xtts-full.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">Clone Test</p>
+          <p class="kicker">Clone Test</p>
           <h2 class="title">XTTS v2 (Full Mixed)</h2>
           <p class="meta">Full translated segment cloned and layered over original bed.</p>
           <audio controls preload="metadata" src="./assets/english-clone-xtts-full-mix.mp3"></audio>
         </article>
+
         <article class="card">
-          <p class="label">Clone Test</p>
-          <h2 class="title">XTTS v2 (Dry)</h2>
-          <p class="meta">30-second English clone quality sample, no bed.</p>
-          <audio controls preload="metadata" src="./assets/english-clone-xtts-short.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">Clone Test</p>
-          <h2 class="title">XTTS v2 (Mixed)</h2>
-          <p class="meta">Same 30-second clone sample layered over music bed.</p>
-          <audio controls preload="metadata" src="./assets/english-clone-xtts-short-mix.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">A/B Variant A</p>
+          <p class="kicker">A/B Variant A</p>
           <h2 class="title">Identity Heavy (Mixed)</h2>
-          <p class="meta">stability 0.20, similarity 0.95, style 0.40</p>
-          <audio controls preload="metadata" src="./assets/ab/variant_a.mix.mp3"></audio>
+          <p class="meta">stability 0.20, similarity 0.95, style 0.40 (1.4x speed)</p>
+          <audio controls preload="metadata" src="./assets/ab/variant_a.mix.1p4x.mp3"></audio>
         </article>
+
         <article class="card">
-          <p class="label">A/B Variant B</p>
+          <p class="kicker">A/B Variant B</p>
           <h2 class="title">Balanced (Mixed)</h2>
           <p class="meta">stability 0.35, similarity 0.85, style 0.25</p>
           <audio controls preload="metadata" src="./assets/ab/variant_b.mix.mp3"></audio>
         </article>
-        <article class="card">
-          <p class="label">A/B Variant C</p>
-          <h2 class="title">Announcer Energy (Mixed)</h2>
-          <p class="meta">stability 0.28, similarity 0.90, style 0.65</p>
-          <audio controls preload="metadata" src="./assets/ab/variant_c.mix.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">A/B Variant D</p>
-          <h2 class="title">Crisp Delivery (Mixed)</h2>
-          <p class="meta">stability 0.45, similarity 0.80, style 0.15</p>
-          <audio controls preload="metadata" src="./assets/ab/variant_d.mix.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">A/B Variant E (V2 Data)</p>
-          <h2 class="title">Identity Lock (Mixed)</h2>
-          <p class="meta">stability 0.18, similarity 0.98, style 0.35</p>
-          <audio controls preload="metadata" src="./assets/ab/variant_e.mix.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">A/B Variant F (V2 Data)</p>
-          <h2 class="title">Identity + Energy (Mixed)</h2>
-          <p class="meta">stability 0.26, similarity 0.95, style 0.60</p>
-          <audio controls preload="metadata" src="./assets/ab/variant_f.mix.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">Stem</p>
-          <h2 class="title">Isolated Vocal (FR)</h2>
-          <p class="meta">Demucs vocal extraction used for cleaner transcription.</p>
-          <audio controls preload="metadata" src="./assets/vocals-isolated.mp3"></audio>
-        </article>
-        <article class="card">
-          <p class="label">Stem</p>
-          <h2 class="title">Music Bed (No Vocals)</h2>
-          <p class="meta">Companion bed used for the English remix.</p>
-          <audio controls preload="metadata" src="./assets/music-bed.mp3"></audio>
-        </article>
-      </section>
-
-      <section class="files">
-        <p>Scripts:</p>
-        <p><a href="./assets/french-script.txt">French cleaned transcript</a></p>
-        <p><a href="./assets/english-script.txt">English localized script</a></p>
-      </section>
-
-      <section class="contact">
-        <h3>Contact</h3>
-        <p>Name: Ben Frankforter</p>
-        <p>Email: your-email@domain.com</p>
       </section>
     </main>
   </body>
