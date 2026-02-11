@@ -4,6 +4,9 @@
 .cache/
 __pycache__/
 *.pyc
+.elevenlabs_voice_id
+audio/cloned/eleven-*.mp3
+audio/cloned/.tmp-aligned.mp3
 
 # Optional heavy source
 audio/raw/
