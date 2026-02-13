@@ -70,6 +70,45 @@ export ELEVENLABS_API_KEY="your_api_key"
 bash /Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/scripts/run_elevenlabs_voice_refresh.sh
 ```
 
+## Higher-fidelity cloning workflow (PVC + multi-episode)
+
+1. Download one or more full episodes:
+
+```bash
+bash scripts/download_episode_batch.sh configs/episode_urls.sample.tsv audio/raw
+```
+
+2. Ensure transcript JSON exists per episode (using `scripts/transcribe.py`).
+
+3. Build a speech-only PVC dataset pack (with 3.5s padding around speech regions):
+
+```bash
+python3 scripts/build_pvc_dataset.py \
+  --manifest configs/pvc_manifest.full.json \
+  --output-dir audio/reference/pvc_dataset_full \
+  --max-gap 3.0 \
+  --min-chars 80 \
+  --min-duration 12 \
+  --padding 3.5 \
+  --max-total-seconds 2400 \
+  --concat-wav audio/reference/laurent-pvc-pack-40min.wav
+```
+
+4. (Optional) Bundle clips for upload:
+
+```bash
+cd audio/reference
+zip -qr laurent-pvc-dataset-40min.zip pvc_dataset_full/clips
+```
+
+5. Run speech-to-speech (voice changer) A/B from an expressive guide read:
+
+```bash
+export ELEVENLABS_API_KEY="your_api_key"
+export ELEVENLABS_VOICE_ID="your_voice_id"
+bash scripts/run_elevenlabs_voice_changer_ab.sh /path/to/guide.wav audio/cloned/voice_changer_ab
+```
+
 Current generated outputs:
 
 - `/Users/benfrankforter/Desktop/xvenao/deep-search-voice-demo/audio/segments/laurent-interstitial-2m45.mp3`
