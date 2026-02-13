@@ -1,0 +1,9 @@
+{
+  "episodes": [
+    {
+      "id": "deep-search-first-10m",
+      "audio": "../audio/segments/deep-search-first-10m.mp3",
+      "transcript": "../transcripts/first-10m.fr.json"
+    }
+  ]
+}
